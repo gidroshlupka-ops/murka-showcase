@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.svg" alt="Murka Showcase — RAG memory, key rotation, RVC voice" width="100%">
+  <img src="docs/hero.png" alt="Murka Showcase — RAG memory, key rotation, RVC voice" width="100%">
 </p>
 
 <p align="center">
@@ -131,7 +131,7 @@ Response headers on convert: `X-RVC-Pitch`, `X-RVC-Auto`, `X-RVC-F0`.
 ├── examples/              # runnable demos
 ├── voice/app.py           # FastAPI RVC service
 ├── weights/               # your checkpoints only
-└── docs/banner.svg
+└── docs/hero.png
 ```
 
 ## What is intentionally missing
