@@ -1,6 +1,9 @@
 """Key rotation: RPM vs daily-quota vs group soft-limit."""
 from __future__ import annotations
 
+import tempfile
+from pathlib import Path
+
 from key_manager import KeyManager
 
 FAKE = [
@@ -11,7 +14,8 @@ FAKE = [
 
 
 def main() -> None:
-    km = KeyManager(FAKE, db_path=":memory:")
+    db = Path(tempfile.gettempdir()) / "murka_showcase_key_bans.db"
+    km = KeyManager(FAKE, db_path=str(db))
     idx, key = km.pick_best("chat")
     print("picked", idx, key[:8] + "…")
     km.mark_used(idx)

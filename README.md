@@ -15,18 +15,31 @@ Reference modules from a **multimodal AI companion**: long-term memory with a hy
 
 This is **not** a dump of a private production bot. Client tokens, chat plumbing, and unrelated integrations are omitted on purpose. What remains is the engineering that is worth reading.
 
-<p align="center">
-  <img src="docs/rag-recall.gif" alt="Hybrid RAG: cosine over-fetch, then rescore by recency and importance" width="100%">
-</p>
+## Demos (real output, not a mock)
+
+Hybrid ranker — `python examples/score_demo.py` — calls `_score()` in [`rag_memory.py`](rag_memory.py). Off-topic recent chatter loses to an on-topic fact:
 
 <p align="center">
-  <a href="docs/murka-voice.wav"><img src="docs/murka-waveform.png" alt="Murka RVC voice waveform — click to play" width="100%"></a><br/>
-  <a href="docs/murka-voice.wav"><strong>▶ listen — RVC sample</strong></a>
+  <img src="docs/score-demo.png" alt="Actual stdout of examples/score_demo.py" width="100%">
 </p>
 
+Daily-quota 429 — `python examples/key_manager_demo.py` — group `aaaaaaaa` banned 24h, next key is the other account:
+
 <p align="center">
-  <img src="docs/voice-autospin.gif" alt="Auto pitch from median F0" width="100%">
+  <img src="docs/keys-demo.png" alt="Actual stdout of examples/key_manager_demo.py" width="100%">
 </p>
+
+RVC clip (Edge TTS → character checkpoint). GitHub README does not play `.wav` inline, so this is an `.mp4` (waveform + audio). Click play:
+
+https://github.com/gidroshlupka-ops/murka-showcase/blob/main/docs/murka-voice.mp4
+
+<video src="docs/murka-voice.mp4" controls width="100%"></video>
+
+<p align="center">
+  <img src="docs/murka-waveform.png" alt="Waveform of the same RVC sample" width="100%">
+</p>
+
+If the player above is empty, open the file: [murka-voice.mp4](https://github.com/gidroshlupka-ops/murka-showcase/blob/main/docs/murka-voice.mp4) · [wav](https://github.com/gidroshlupka-ops/murka-showcase/blob/main/docs/murka-voice.wav)
 
 ## Why these three pieces
 
@@ -65,7 +78,7 @@ score = 0.5 * similarity + 0.3 * exp(-age_hours / 72) + 0.2 * importance
 - **Session snapshots** (user gone ≥ 2 hours) at `0.75`
 - **Facts** at `0.9`
 
-A durable fact therefore survives a noisy week of small talk (Lisbon still beats “lol wait what”). Embeddings are local (`paraphrase-multilingual-MiniLM-L12-v2`) — no third-party embed API on the hot path.
+A high-importance, on-topic fact can beat closer-looking small talk. Recency still matters: an 11-day-old fact will lose to a similar recent turn — that is the formula, not a slogan. Embeddings are local (`paraphrase-multilingual-MiniLM-L12-v2`) — no third-party embed API on the hot path.
 
 ```python
 from rag_memory import RagMemory
@@ -78,7 +91,9 @@ context = await rag.query(None, uid, user_text, k=5)
 
 ```bash
 pip install -r requirements.txt
-python examples/rag_demo.py
+set PYTHONPATH=.
+python examples/score_demo.py
+python examples/key_manager_demo.py
 ```
 
 ## Key rotation
