@@ -29,12 +29,15 @@ Daily-quota 429 — `python examples/key_manager_demo.py` — group `aaaaaaaa` b
   <img src="docs/keys-demo.png" alt="Actual stdout of examples/key_manager_demo.py" width="100%">
 </p>
 
-RVC clip (Edge TTS → character checkpoint). GitHub plays `.mp4` in the README; `.wav` it does not.
+RVC clip (Edge TTS → character checkpoint). `![](file.mp4)` is treated as a **picture**, so GitHub showed a broken image. This is an HTML player pointing at a CDN that actually streams the file:
 
 <div align="center">
-
-![Murka RVC voice](docs/murka-voice.mp4)
-
+  <video width="480" height="270" controls preload="metadata" poster="docs/murka-voice-card.png">
+    <source src="https://cdn.jsdelivr.net/gh/gidroshlupka-ops/murka-showcase@main/docs/murka-voice.mp4" type="video/mp4">
+    <source src="https://github.com/gidroshlupka-ops/murka-showcase/releases/download/rvc-demo/murka-voice.mp4" type="video/mp4">
+  </video>
+  <br/>
+  <audio controls preload="none" src="https://cdn.jsdelivr.net/gh/gidroshlupka-ops/murka-showcase@main/docs/murka-voice.wav"></audio>
 </div>
 ## Why these three pieces
 
