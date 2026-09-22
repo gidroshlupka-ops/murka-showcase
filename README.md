@@ -15,6 +15,19 @@ Reference modules from a **multimodal AI companion**: long-term memory with a hy
 
 This is **not** a dump of a private production bot. Client tokens, chat plumbing, and unrelated integrations are omitted on purpose. What remains is the engineering that is worth reading.
 
+<p align="center">
+  <img src="docs/rag-recall.gif" alt="Hybrid RAG: cosine over-fetch, then rescore by recency and importance" width="100%">
+</p>
+
+<p align="center">
+  <a href="docs/murka-voice.wav"><img src="docs/murka-waveform.png" alt="Murka RVC voice waveform — click to play" width="100%"></a><br/>
+  <a href="docs/murka-voice.wav"><strong>▶ listen — RVC sample</strong></a>
+</p>
+
+<p align="center">
+  <img src="docs/voice-autospin.gif" alt="Auto pitch from median F0" width="100%">
+</p>
+
 ## Why these three pieces
 
 | Module | What it solves | Why it is not a tutorial clone |
@@ -52,7 +65,7 @@ score = 0.5 * similarity + 0.3 * exp(-age_hours / 72) + 0.2 * importance
 - **Session snapshots** (user gone ≥ 2 hours) at `0.75`
 - **Facts** at `0.9`
 
-A durable fact therefore survives a noisy week of small talk. Embeddings are local (`paraphrase-multilingual-MiniLM-L12-v2`) — no third-party embed API on the hot path.
+A durable fact therefore survives a noisy week of small talk (Lisbon still beats “lol wait what”). Embeddings are local (`paraphrase-multilingual-MiniLM-L12-v2`) — no third-party embed API on the hot path.
 
 ```python
 from rag_memory import RagMemory
@@ -101,7 +114,7 @@ Copy [`.env.example`](.env.example) to `.env`. Never commit real keys.
 
 ## Voice (RVC)
 
-Weights are **not** in git. Put your own checkpoint in `weights/` (`model.pth`, optional `model.index`).
+Short clip above is Edge TTS → this character’s RVC checkpoint (melody from the TTS pass, timbre from the model). Weights themselves stay out of git — drop your own `weights/model.pth` to run the API.
 
 | Endpoint | Input | Output |
 | --- | --- | --- |
@@ -131,7 +144,7 @@ Response headers on convert: `X-RVC-Pitch`, `X-RVC-Auto`, `X-RVC-F0`.
 ├── examples/              # runnable demos
 ├── voice/app.py           # FastAPI RVC service
 ├── weights/               # your checkpoints only
-└── docs/hero.png
+└── docs/                  # banner, GIFs, voice sample
 ```
 
 ## What is intentionally missing
