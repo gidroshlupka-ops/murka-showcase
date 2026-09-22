@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Murka — RVC sample</title>
+  <style>
+    html, body {
+      margin: 0; height: 100%;
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: Segoe UI, system-ui, sans-serif;
+      display: grid;
+      place-items: center;
+    }
+    .wrap { text-align: left; }
+    .name { margin: 0 0 10px 18px; font-size: 18px; color: #c9d1d9; }
+    button.bubble {
+      border: 0; cursor: pointer;
+      width: 520px; max-width: calc(100vw - 32px);
+      height: 92px; border-radius: 46px;
+      background: #3390ec; color: #fff;
+      display: flex; align-items: center; gap: 16px;
+      padding: 0 22px; box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    }
+    .play {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #fff; color: #2b7fd4;
+      display: grid; place-items: center; flex: none;
+      font-size: 22px;
+    }
+    .meta { font-size: 13px; opacity: .95; margin-top: 4px; }
+    audio { display: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="name">Murka</p>
+    <button class="bubble" id="btn" type="button">
+      <span class="play" id="icon">▶</span>
+      <span>
+        <strong>RVC voice sample</strong>
+        <div class="meta" id="meta">00:03 · tap to play</div>
+      </span>
+    </button>
+  </div>
+  <audio id="a" src="murka-voice.wav" preload="auto"></audio>
+  <script>
+    const a = document.getElementById("a");
+    const icon = document.getElementById("icon");
+    const meta = document.getElementById("meta");
+    const btn = document.getElementById("btn");
+    const fmt = (s) => {
+      if (!isFinite(s)) return "00:03";
+      const n = Math.max(0, s | 0);
+      return String(Math.floor(n / 60)).padStart(2, "0") + ":" + String(n % 60).padStart(2, "0");
+    };
+    btn.onclick = () => {
+      if (a.paused) { a.play(); icon.textContent = "❚❚"; }
+      else { a.pause(); icon.textContent = "▶"; }
+    };
+    a.ontimeupdate = () => { meta.textContent = fmt(a.currentTime) + " / " + fmt(a.duration || 3); };
+    a.onended = () => { icon.textContent = "▶"; meta.textContent = "00:03 · tap to play"; };
+  </script>
+</body>
+</html>
