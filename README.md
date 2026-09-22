@@ -29,18 +29,13 @@ Daily-quota 429 — `python examples/key_manager_demo.py` — group `aaaaaaaa` b
   <img src="docs/keys-demo.png" alt="Actual stdout of examples/key_manager_demo.py" width="100%">
 </p>
 
-RVC clip (Edge TTS → character checkpoint). GitHub README does not play `.wav` inline, so this is an `.mp4` (waveform + audio). Click play:
+RVC clip (Edge TTS → character checkpoint). GitHub plays `.mp4` in the README; `.wav` it does not.
 
-https://github.com/gidroshlupka-ops/murka-showcase/blob/main/docs/murka-voice.mp4
+<div align="center">
 
-<video src="docs/murka-voice.mp4" controls width="100%"></video>
+![Murka RVC voice](docs/murka-voice.mp4)
 
-<p align="center">
-  <img src="docs/murka-waveform.png" alt="Waveform of the same RVC sample" width="100%">
-</p>
-
-If the player above is empty, open the file: [murka-voice.mp4](https://github.com/gidroshlupka-ops/murka-showcase/blob/main/docs/murka-voice.mp4) · [wav](https://github.com/gidroshlupka-ops/murka-showcase/blob/main/docs/murka-voice.wav)
-
+</div>
 ## Why these three pieces
 
 | Module | What it solves | Why it is not a tutorial clone |
